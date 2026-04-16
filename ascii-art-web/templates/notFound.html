@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERROR PAGE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:      #00ff41;
+      --green-dim:  #00b32d;
+      --green-glow: rgba(0,255,65,0.3);
+      --bg:         #0a0a0a;
+      --panel:      #0d0d0d;
+      --border:     #1a3a1a;
+      --text:       #c8ffc8;
+      --text-dim:   #4a8a4a;
+      --red:        #ff3333;
+      --amber:      #ffb300;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* CRT scanlines */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: 'VT323', monospace;
+      font-size: 2.4rem;
+      color: var(--green);
+      text-shadow: 0 0 14px var(--green-glow);
+      letter-spacing: 3px;
+    }
+
+    .logo-sub { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 2px; }
+
+    main {
+      max-width: 900px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .terminal {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      background: #111;
+      border-bottom: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .btn-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .btn-dot.r { background: #ff5f57; }
+    .btn-dot.y { background: #febc2e; }
+    .btn-dot.g { background: #28c840; }
+    .bar-title { margin: 0 auto; font-size: 0.68rem; color: var(--text-dim); letter-spacing: 1px; }
+
+    .terminal-body { padding: 1.5rem; }
+
+    .error-box {
+      border: 1px solid var(--red);
+      background: rgba(255,51,51,0.05);
+      color: var(--red);
+      padding: 0.7rem 1rem;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(3px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding: 0.9rem 2rem;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ASCII-ART WEB</div>
+  <div class="logo-sub">// terminal v1.0</div>
+</header>
+
+<main>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="btn-dot r"></div>
+      <div class="btn-dot y"></div>
+      <div class="btn-dot g"></div>
+      <span class="bar-title">ascii-art-web — bash</span>
+    </div>
+
+    <div class="terminal-body">
+
+      <div>
+        {{.Error}}
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>ASCII-ART-WEB &nbsp;·&nbsp; PORT 8080 &nbsp;·&nbsp; GO STD LIB ONLY</footer>
+
+</body>
+</html>

@@ -2,9 +2,10 @@ package main
 
 import (
 	"ascii-art-web/operations"
+	"html/template"
+	"log"
 	"net/http"
 	"strings"
-	"text/template"
 )
 
 type PageData struct {
@@ -14,20 +15,31 @@ type PageData struct {
 	Error  string
 }
 
-var tmpl = template.Must(template.ParseFiles("templates/index.html"))
+// var tmpl = template.Must(template.ParseFiles("templates/index.html"))
+var tmpl = template.Must(template.ParseFiles("templates/index.html", "templates/notFound.html"))
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	//Make sure path is "/". Check if path is not "/"
 	if r.URL.Path != "/" {
+		//Write status 404
 		w.WriteHeader(http.StatusNotFound)
-		tmpl.Execute(w, PageData{Error: "page not found"})
+
+		//Load error page template and return Error
+		err := tmpl.ExecuteTemplate(w, "notFound.html", PageData{Error: "Page Not Found"})
+
+		//If there is template loading error
+		if err != nil {
+			log.Println("template error:", err)
+		}
+
 		return
 	}
 
-	// 500 — template itself is broken/missing
-	if err := tmpl.Execute(w, PageData{}); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	//If the correct route "/" is entered print the index page
+	if err := tmpl.ExecuteTemplate(w, "index.html", PageData{}); err != nil {
+    log.Println("template error:", err)
+    return
+}
 }
 
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {

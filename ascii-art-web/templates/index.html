@@ -155,7 +155,7 @@
     .banner-options input:checked + label::before { content: '[*] '; }
     .banner-options label:hover { border-color: #2a5a2a; color: var(--text); }
 
-    .submit-row { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+    .submit-row, .clear-row { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
 
     button[type="submit"] {
       background: transparent;
@@ -187,6 +187,24 @@
     button[type="submit"] span { position: relative; z-index: 1; }
 
     hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+        button[type="clear"] {
+      background: transparent;
+      border: none;
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.55rem 2rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.15s;
+    }
+
+    button[type="clear"]:hover { color: var(--text); }
 
     .output-label {
       font-size: 0.68rem;
@@ -263,7 +281,7 @@
       <form method="POST" action="/ascii-art">
 
         <div class="form-row">
-          <span class="prompt">$</span>
+          <span class="prompt"></span>
           <div class="field">
             <label class="field-label" for="text">Input text</label>
             <textarea
@@ -277,7 +295,7 @@
         </div>
 
         <div class="form-row">
-          <span class="prompt">~</span>
+          <span class="prompt"></span>
           <div class="field">
             <label class="field-label">Banner style</label>
             <div class="banner-options">
@@ -319,8 +337,13 @@
         <span class="tag">OUTPUT</span>
         {{if .Banner}}<span>// {{.Banner}}.txt</span>{{else}}<span>// awaiting input</span>{{end}}
       </div>
-      <pre>{{.Result}}</pre>
+      <pre class="result">{{.Result}}</pre>
 
+      {{if .Result}}
+        <div class="clear-row">
+              <button type="clear"><span>CLEAR</span></button>
+        </div>
+      {{end}}
     </div>
   </div>
 </main>
@@ -329,3 +352,14 @@
 
 </body>
 </html>
+
+<script>
+  const clearBtn = document.querySelector(".clear-row")
+  const result = document.querySelector(".result")
+  const text = document.getElementById("text")
+
+  clearBtn.addEventListener("click", () => {
+    result.textContent = ""
+    text.textContent = ""
+  })
+</script>
