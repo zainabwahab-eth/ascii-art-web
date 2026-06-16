@@ -155,7 +155,7 @@
     .banner-options input:checked + label::before { content: '[*] '; }
     .banner-options label:hover { border-color: #2a5a2a; color: var(--text); }
 
-    .submit-row, .clear-row { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+    .submit-row { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
 
     button[type="submit"] {
       background: transparent;
@@ -340,9 +340,6 @@
       <pre class="result">{{.Result}}</pre>
 
       {{if .Result}}
-        <div class="clear-row">
-              <button type="clear"><span>CLEAR</span></button>
-        </div>
       {{end}}
     </div>
   </div>
@@ -352,14 +349,3 @@
 
 </body>
 </html>
-
-<script>
-  const clearBtn = document.querySelector(".clear-row")
-  const result = document.querySelector(".result")
-  const text = document.getElementById("text")
-
-  clearBtn.addEventListener("click", () => {
-    result.textContent = ""
-    text.textContent = ""
-  })
-</script>
