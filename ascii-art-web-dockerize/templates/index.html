@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCII Art Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/style.css">
+  <script src="static/index.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">ASCII-ART WEB</div>
+  <div class="logo-sub">// terminal v1.0</div>
+</header>
+
+<main>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="btn-dot r"></div>
+      <div class="btn-dot y"></div>
+      <div class="btn-dot g"></div>
+      <span class="bar-title">ascii-art-web — bash</span>
+    </div>
+
+    <div class="terminal-body">
+
+      <form method="POST" action="/ascii-art">
+
+        <div class="form-row">
+          <span class="prompt"></span>
+          <div class="field">
+            <label class="field-label" for="text">Input text</label>
+            <textarea
+              id="text"
+              name="text"
+              rows="3"
+              placeholder="Type something..."
+              spellcheck="false"
+            >{{if .Input}}{{.Input}}{{end}}</textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <span class="prompt"></span>
+          <div class="field">
+            <label class="field-label">Banner style</label>
+            <div class="banner-options">
+
+              <div>
+                <input type="radio" name="banner" id="standard" value="standard"
+                  {{if or (eq .Banner "standard") (eq .Banner "")}}checked{{end}} />
+                <label for="standard">standard</label>
+              </div>
+
+              <div>
+                <input type="radio" name="banner" id="shadow" value="shadow"
+                  {{if eq .Banner "shadow"}}checked{{end}} />
+                <label for="shadow">shadow</label>
+              </div>
+
+              <div>
+                <input type="radio" name="banner" id="thinkertoy" value="thinkertoy"
+                  {{if eq .Banner "thinkertoy"}}checked{{end}} />
+                <label for="thinkertoy">thinkertoy</label>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit"><span>&#9654; GENERATE</span></button>
+        </div>
+
+      </form>
+
+      {{if .Error}}
+        <div class="error-box">! {{.Error}}</div>
+      {{end}}
+
+      <hr />
+      <div class="output-label">
+        <span class="tag">OUTPUT</span>
+        {{if .Banner}}<span>// {{.Banner}}.txt</span>{{else}}<span>// awaiting input</span>{{end}}
+      </div>
+      <pre class="result">{{.Result}}</pre>
+
+      {{if .Result}}
+        <div class="clear-row">
+              <button type="clear"><span>CLEAR</span></button>
+        </div>
+      {{end}}
+    </div>
+  </div>
+</main>
+
+<footer>ASCII-ART-WEB &nbsp;·&nbsp; PORT 8080 &nbsp;·&nbsp; GO STD LIB ONLY</footer>
+
+</body>
+</html>
