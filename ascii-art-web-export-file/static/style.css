@@ -1,0 +1,357 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --green: #00ff41;
+  --green-dim: #00b32d;
+  --green-glow: rgba(0, 255, 65, 0.3);
+  --bg: #0a0a0a;
+  --panel: #0d0d0d;
+  --border: #1a3a1a;
+  --text: #c8ffc8;
+  --text-dim: #4a8a4a;
+  --red: #ff3333;
+  --amber: #ffb300;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Share Tech Mono", monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CRT scanlines */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: "VT323", monospace;
+  font-size: 2.4rem;
+  color: var(--green);
+  text-shadow: 0 0 14px var(--green-glow);
+  letter-spacing: 3px;
+}
+
+.logo-sub {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+.hidden {
+  display: none;
+}
+
+main {
+  max-width: 900px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.terminal {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.terminal-bar {
+  background: #111;
+  border-bottom: 1px solid var(--border);
+  padding: 0.45rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.btn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.btn-dot.r {
+  background: #ff5f57;
+}
+.btn-dot.y {
+  background: #febc2e;
+}
+.btn-dot.g {
+  background: #28c840;
+}
+.bar-title {
+  margin: 0 auto;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.prompt {
+  color: var(--green);
+  padding-top: 0.35rem;
+  user-select: none;
+}
+
+.field {
+  flex: 1;
+}
+
+label.field-label {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+textarea {
+  width: 100%;
+  background: #050505;
+  border: 1px solid var(--border);
+  color: var(--green);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  caret-color: var(--green);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+textarea::placeholder {
+  color: var(--text-dim);
+  opacity: 0.45;
+}
+
+textarea:focus {
+  border-color: var(--green-dim);
+  box-shadow:
+    0 0 0 1px var(--green-dim),
+    0 0 14px rgba(0, 255, 65, 0.08);
+}
+
+.banner-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.banner-options input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.banner-options label {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.banner-options label::before {
+  content: "[ ] ";
+}
+
+.banner-options input:checked + label {
+  border-color: var(--green-dim);
+  color: var(--green);
+  background: rgba(0, 255, 65, 0.04);
+}
+
+.banner-options input:checked + label::before {
+  content: "[*] ";
+}
+.banner-options label:hover {
+  border-color: #2a5a2a;
+  color: var(--text);
+}
+
+.submit-row,
+.clear-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+
+button[type="submit"] {
+  background: transparent;
+  border: 1px solid var(--green-dim);
+  color: var(--green);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.55rem 2rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.15s;
+}
+
+button[type="submit"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s;
+  z-index: 0;
+}
+
+button[type="submit"]:hover::before {
+  transform: scaleX(1);
+}
+button[type="submit"]:hover {
+  color: #000;
+}
+button[type="submit"] span {
+  position: relative;
+  z-index: 1;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+button[type="clear"] {
+  background: transparent;
+  border: none;
+  color: var(--green);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.55rem 2rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.15s;
+}
+
+button[type="clear"]:hover {
+  color: var(--text);
+}
+
+.output-label {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.output-label .tag {
+  color: var(--amber);
+}
+
+.output-main-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+  
+
+pre {
+  background: #030303;
+  border: 1px solid var(--border);
+  color: var(--green);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  padding: 1.25rem;
+  overflow-y: auto;
+  white-space: pre;
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.35);
+  min-height: 48px;
+  max-height: 350px;
+  animation: fadeIn 0.35s ease;
+}
+
+pre:empty::after {
+  content: "// output will appear here";
+  color: var(--text-dim);
+  opacity: 0.35;
+}
+
+.error-box {
+  border: 1px solid var(--red);
+  background: rgba(255, 51, 51, 0.05);
+  color: var(--red);
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 0.9rem 2rem;
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  text-align: center;
+  letter-spacing: 1px;
+}
