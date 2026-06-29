@@ -4,9 +4,6 @@
 
 A continuation of the ASCII-Art-Web project — same Go server, same three banner styles, but now fully containerized with Docker. Instead of needing Go installed locally to run the project, anyone with Docker can build and run it in one command.
 
-## Authors
-
-- Zainab Wahab
 
 ## Usage
 
@@ -41,7 +38,7 @@ docker system prune
 ### Dockerfile
 
 ```dockerfile
-FROM golang:1.22
+FROM golang:1.27rc1-alpine3.24
 
 LABEL version="1.0"
 
@@ -58,11 +55,11 @@ CMD ["./ascii-art-web"]
 ```
 
 - `FROM golang:1.22` — uses the official Go image as the base, so the build environment matches exactly what the app needs.
+- `LABEL` — attaches metadata (version) to the image, satisfying the requirement to apply metadata to Docker objects.
 - `WORKDIR /app` — sets where commands run inside the container.
 - `COPY go.mod ./` then `COPY . .` — copies dependency files first to take advantage of Docker's build cache, then copies the rest of the project.
 - `RUN go build` — compiles the binary inside the container at build time.
 - `EXPOSE 8080` — documents which port the app listens on.
-- `LABEL` — attaches metadata (maintainer, version, description) to the image, satisfying the requirement to apply metadata to Docker objects.
 - `CMD` — the command that runs when a container starts from this image.
 
 ### Image vs Container
@@ -75,6 +72,15 @@ This project produces exactly one Dockerfile, one image, and one container — n
 ### Garbage Collection
 
 Every `docker build` and every `docker run` leaves artifacts behind — old images, stopped containers, dangling layers. `docker system prune` removes anything not currently in use, which keeps the local Docker environment from filling up with unused objects over time.
+
+**Stop container:**
+docker docker <container-id>
+
+**Remove the container:**
+docker rm <container-id>
+
+**Remove the image after use:**
+docker rmi ascii-art-web
 
 ## What I Learned
 

@@ -1,4 +1,4 @@
-FROM golang:1.25-alpine3.23
+FROM golang:1.27rc1-alpine3.24
 
 LABEL version="1.0"
 
